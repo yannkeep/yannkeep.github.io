@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTRE-FEU</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --black: #000;
+            --white: #fff;
+            --red: #ff0000;
+            --green: #00ff00;
+            --yellow: #ffff00;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            min-height: 100vh;
+            cursor: crosshair;
+        }
+        
+        .mono { font-family: 'Space Mono', monospace; }
+        
+        ::selection {
+            background: var(--red);
+            color: var(--black);
+        }
+        
+        /* HEADER BRUTAL */
+        .masthead {
+            padding: 1rem;
+            border-bottom: 3px solid var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+        
+        .logo span { color: var(--red); }
+        
+        .status {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--green);
+        }
+        
+        .status::before {
+            content: "● ";
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        
+        /* NAVIGATION */
+        .nav {
+            display: flex;
+            border-bottom: 1px solid #333;
+            overflow-x: auto;
+        }
+        
+        .nav-item {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            color: #666;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-right: 1px solid #333;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            transition: all 0.1s;
+        }
+        
+        .nav-item:hover {
+            background: #111;
+            color: var(--white);
+        }
+        
+        .nav-item.active {
+            background: var(--red);
+            color: var(--black);
+        }
+        
+        /* MAIN */
+        .main {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* SECTION HEADERS */
+        .section-head {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+        
+        .section-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--red);
+            line-height: 1;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .section-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        
+        /* GRIDS */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 500px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+        
+        /* CARDS */
+        .card {
+            border: 1px solid #333;
+            background: #0a0a0a;
+        }
+        
+        .card-head {
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        
+        .card-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--red);
+            color: var(--black);
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* FORMS */
+        .field {
+            margin-bottom: 1rem;
+        }
+        
+        .field label {
+            display: block;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--black);
+            border: 1px solid #333;
+            color: var(--white);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+        
+        .field textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* BUTTONS */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        
+        .btn:hover {
+            background: var(--red);
+        }
+        
+        .btn-red {
+            background: var(--red);
+            color: var(--black);
+        }
+        
+        .btn-red:hover {
+            background: var(--white);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--white);
+            color: var(--white);
+        }
+        
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* OUTPUT BOX */
+        .output {
+            background: #0a0a0a;
+            border: 1px solid var(--green);
+            padding: 1rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .output.error {
+            border-color: var(--red);
+        }
+        
+        /* QUOTE */
+        .quote {
+            border-left: 3px solid var(--red);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            background: #0a0a0a;
+        }
+        
+        .quote-text {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        .quote-source {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: #666;
+        }
+        
+        /* TABLES */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            font-size: 0.85rem;
+        }
+        
+        .table th {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #666;
+        }
+        
+        /* COUNTERS */
+        .counter-big {
+            font-family: 'Space Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--red);
+            line-height: 1;
+        }
+        
+        .counter-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        /* TAGS */
+        .tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .tag-red { background: var(--red); color: var(--black); }
+        .tag-green { background: var(--green); color: var(--black); }
+        .tag-white { background: var(--white); color: var(--black); }
+        
+        /* ARSENAL ITEM */
+        .arsenal-item {
+            border: 1px solid #333;
+            margin-bottom: 1rem;
+            transition: all 0.1s;
+        }
+        
+        .arsenal-item:hover {
+            border-color: var(--red);
+        }
+        
+        .arsenal-head {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: #0a0a0a;
+        }
+        
+        .arsenal-head h3 {
+            font-size: 1rem;
+        }
+        
+        .arsenal-body {
+            padding: 1.5rem;
+            border-top: 1px solid #333;
+            display: none;
+        }
+        
+        .arsenal-item.open .arsenal-body {
+            display: block;
+        }
+        
+        /* PROGRESS */
+        .progress {
+            height: 4px;
+            background: #333;
+            margin: 1rem 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--red);
+            transition: width 0.3s;
+        }
+        
+        /* COPY FEEDBACK */
+        .copy-feedback {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--green);
+            color: var(--black);
+            padding: 1rem 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .copy-feedback.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* FOOTER */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .footer a { color: var(--red); }
+        
+        /* SPECIAL: MANIPULATION REVEAL */
+        .manipulation-box {
+            border: 2px solid var(--red);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .manipulation-box::before {
+            content: "TECHNIQUE DE MANIPULATION";
+            position: absolute;
+            top: -0.7rem;
+            left: 1rem;
+            background: var(--black);
+            padding: 0 0.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--red);
+        }
+        
+        /* LEADERBOARD */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+        }
+        
+        .leaderboard-rank {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            width: 3rem;
+            color: var(--red);
+        }
+        
+        .leaderboard-name {
+            flex: 1;
+        }
+        
+        .leaderboard-score {
+            font-family: 'Space Mono', monospace;
+            color: var(--green);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        
+        // ═══════════════════════════════════════════════════════════════
+        // BASE DE DONNÉES - MUNITIONS
+        // ═══════════════════════════════════════════════════════════════
+        
+        const ARSENAL = {
+            // Citations retournables - leurs mots contre eux
+            citations: {
+                deborsu: [
+                    {
+                        texte: "Un reporter rapporte mais ne juge pas.",
+                        date: "08/11/2025",
+                        source: "Facebook",
+                        retournement: "Alors pourquoi cette narration orientée ? 'On aurait donc bien un problème de mentalité en Wallonie' — c'est rapporter ou juger ?",
+                        hashtags: ["#DeborsuJuge", "#RTLManipule"]
+                    },
+                    {
+                        texte: "On aurait donc bien un problème de mentalité en Wallonie.",
+                        date: "07/11/2025",
+                        source: "Narration documentaire",
+                        retournement: "Problème de mentalité ? Ou problème de journaliste qui confond corrélation et causalité, qui ignore les pièges à l'emploi, qui tronque les témoignages ?",
+                        hashtags: ["#MentalitéDeborsu", "#BiasCognitif"]
+                    },
+                    {
+                        texte: "C'est d'autant plus dérangeant que les aides sociales chez nous sont très généreuses.",
+                        date: "07/11/2025", 
+                        source: "Narration documentaire",
+                        retournement: "RIS isolé = 1.263€/mois. Seuil de pauvreté = 1.450€. 'Généreux' ? Deborsu confond Belgique et Monaco.",
+                        hashtags: ["#RISGénéreux", "#MathsDeborsu"]
+                    }
+                ],
+                
+                politiques: [
+                    {
+                        auteur: "Frank Vandenbroucke",
+                        texte: "Il faut activer les malades de longue durée.",
+                        retournement: "Activer comment ? En supprimant leurs revenus ? 63% ont plus de 50 ans, 1/3 souffrent de troubles psy. On 'active' une dépression ?",
+                        hashtags: ["#ActiverLaMisère"]
+                    },
+                    {
+                        auteur: "Gouvernement Arizona",
+                        texte: "Limiter le chômage à 24 mois pour inciter au retour à l'emploi.",
+                        retournement: "Inciter ? Ou punir ? 90.000 exclusions prévues. Vers quels emplois ? Le taux de vacance en Wallonie est de 3%. Faites le calcul.",
+                        hashtags: ["#ArizonaPunit", "#MathsGouvernement"]
+                    }
+                ],
+                
+                rtl: [
+                    {
+                        texte: "RTL Belgium n'a pas souhaité commenter.",
+                        retournement: "400+ plaintes au CSA et pas un mot. Le silence complice.",
+                        hashtags: ["#RTLSilence", "#CompliceDeStigmatisation"]
+                    }
+                ]
+            },
+            
+            // Chiffres-massues
+            chiffres: [
+                {
+                    valeur: "< 3%",
+                    label: "Taux de fraude réel aux allocations",
+                    source: "SPF Sécurité sociale",
+                    vs: "100%",
+                    vsLabel: "Impression donnée par le documentaire",
+                    impact: "MULTIPLICATEUR x33 de perception de fraude"
+                },
+                {
+                    valeur: "410.860",
+                    label: "Téléspectateurs exposés",
+                    source: "Audimétrie RTL",
+                    vs: "400+",
+                    vsLabel: "Plaintes au CSA",
+                    impact: "1 plainte pour 1.027 spectateurs — mobilisation historique"
+                },
+                {
+                    valeur: "1h",
+                    label: "Interview Gaëlle Denys",
+                    source: "Témoignage CPAS Verviers",
+                    vs: "~2min",
+                    vsLabel: "Retenu au montage",
+                    impact: "97% DU MESSAGE EFFACÉ"
+                },
+                {
+                    valeur: "90.000",
+                    label: "Exclusions Arizona prévues",
+                    source: "Projections fédérales",
+                    vs: "750€",
+                    vsLabel: "Transfert prévu par personne/mois",
+                    impact: "Coût réel CPAS = 1.250€+ → les communes paieront la différence"
+                },
+                {
+                    valeur: "21 jours",
+                    label: "Entre vote Arizona et diffusion Deborsu",
+                    source: "Calendrier parlementaire",
+                    vs: "39,1%",
+                    vsLabel: "Part de marché",
+                    impact: "Record d'audience pour un reportage stigmatisant — coïncidence ?"
+                }
+            ],
+            
+            // Techniques de manipulation révélées
+            techniques: [
+                {
+                    nom: "Cherry-picking",
+                    definition: "Sélectionner uniquement les cas qui confirment la thèse",
+                    exemple_deborsu: "Jacqueline en mutuelle depuis 8 ans pour une 'crotte de chien' — cas extrême présenté comme typique",
+                    contre_mesure: "Demander les statistiques globales. Sur 500.000 invalides, combien de 'crottes de chien' ?",
+                    detecter: "Quand on vous montre UN cas choquant sans contexte statistique"
+                },
+                {
+                    nom: "Framing / Cadrage",
+                    definition: "Orienter l'interprétation par le choix des mots et images",
+                    exemple_deborsu: "Titre 'Tous fraudeurs ?' — la question fermée suggère la réponse",
+                    contre_mesure: "Reformuler : 'Moins de 3% de fraude : pourquoi ce documentaire ?'",
+                    detecter: "Les titres en forme de question rhétorique"
+                },
+                {
+                    nom: "Témoignage tronqué",
+                    definition: "Couper les nuances, garder ce qui arrange",
+                    exemple_deborsu: "1h d'interview de Gaëlle Denys → quelques phrases décontextualisées",
+                    contre_mesure: "Exiger les rushes. Relayer les témoignages complets des intervenants.",
+                    detecter: "Quand un intervenant se plaint après diffusion"
+                },
+                {
+                    nom: "Généralisation abusive",
+                    definition: "Transformer des cas individuels en 'tendance'",
+                    exemple_deborsu: "'On aurait bien un problème de mentalité' — à partir de 3-4 témoins sur 500.000",
+                    contre_mesure: "Calculer : échantillon / population totale = représentativité nulle",
+                    detecter: "Le passage du 'il/elle' au 'ils/elles' sans données"
+                },
+                {
+                    nom: "Faux équilibre",
+                    definition: "Donner l'impression de neutralité en montrant '2 côtés' inégaux",
+                    exemple_deborsu: "30 min de 'profiteurs' vs 2 min de contexte social",
+                    contre_mesure: "Chronométrer. Compter les intervenants de chaque 'camp'.",
+                    detecter: "Quand le 'contradictoire' arrive dans les 5 dernières minutes"
+                },
+                {
+                    nom: "Timing stratégique",
+                    definition: "Diffuser au moment où l'impact politique est maximal",
+                    exemple_deborsu: "3 semaines après le vote Arizona, 7 semaines avant application",
+                    contre_mesure: "Toujours checker le calendrier politique/législatif",
+                    detecter: "Quand un 'reportage' tombe pile au bon moment pour le pouvoir"
+                }
+            ],
+            
+            // Templates de contre-attaque
+            templates: {
+                twitter: [
+                    {
+                        titre: "Le retournement factuel",
+                        template: `Deborsu dit : "[CITATION]"
+
+Les faits :
+→ [FAIT 1]
+→ [FAIT 2]
+→ [FAIT 3]
+
+Source : [SOURCE]
+
+[HASHTAGS]`,
+                    },
+                    {
+                        titre: "Le ratio implacable",
+                        template: `[CHIFFRE DEBORSU] téléspectateurs.
+[CHIFFRE RÉEL] taux de fraude réel.
+
+Soit un multiplicateur de perception de x[RATIO].
+
+C'est pas du journalisme, c'est de la propagande.
+
+[HASHTAGS]`,
+                    },
+                    {
+                        titre: "La question qui tue",
+                        template: `Question pour @[COMPTE_CIBLE] :
+
+[QUESTION PRÉCISE AVEC CHIFFRES]
+
+On attend votre réponse.
+
+[HASHTAGS]`
+                    },
+                    {
+                        titre: "Le thread éducatif",
+                        template: `🧵 THREAD : Comment [MÉDIA] vous a manipulé sur [SUJET]
+
+1/ La technique utilisée s'appelle "[TECHNIQUE]"
+
+2/ Ça consiste à [DÉFINITION]
+
+3/ Exemple concret : [EXEMPLE]
+
+4/ Comment ne pas tomber dans le panneau : [CONTRE-MESURE]
+
+5/ Partagez ce thread. L'éducation aux médias, c'est de l'autodéfense.
+
+[HASHTAGS]`
+                    }
+                ],
+                
+                linkedin: [
+                    {
+                        titre: "L'analyse pro",
+                        template: `📊 Analyse : Le documentaire Deborsu sous l'angle de la communication
+
+En tant que [PROFESSION/EXPERTISE], je suis interpellé par [ÉLÉMENT PRÉCIS].
+
+Les données officielles (source : [SOURCE]) indiquent :
+• [DONNÉE 1]
+• [DONNÉE 2]
+• [DONNÉE 3]
+
+Cela pose question sur [ANGLE CRITIQUE].
+
+La responsabilité des médias dans le débat public mérite qu'on s'y attarde.
+
+#MédiasEtSociété #AnalyseCritique #Belgique`
+                    }
+                ],
+                
+                plainte_csa: `PLAINTE AU CONSEIL SUPÉRIEUR DE L'AUDIOVISUEL
+
+Émission visée : "Sans boulot : tous fraudeurs ?"
+Diffuseur : RTL-TVI
+Date : 7 novembre 2025
+Présentateur : Christophe Deborsu
+
+MOTIFS DE LA PLAINTE :
+
+1. VIOLATION DE L'ARTICLE 9 DU DÉCRET SMA
+Incitation à la discrimination basée sur la condition sociale.
+Le documentaire présente systématiquement les bénéficiaires d'aides sociales sous un angle négatif, créant une image stigmatisante d'une catégorie de population.
+
+2. ATTEINTE À LA DIGNITÉ HUMAINE
+Des personnes en situation de précarité sont filmées et présentées de manière à susciter le mépris du public, en violation de l'article 9§1 du décret.
+
+3. MANQUEMENT À LA RIGUEUR DE L'INFORMATION
+- Témoignages tronqués (déclaration publique de Gaëlle Denys, CPAS Verviers)
+- Absence de contextualisation statistique (taux de fraude réel : <3%)
+- Généralisations abusives à partir de cas individuels
+
+4. DÉFAUT D'ÉQUILIBRE
+Le temps d'antenne consacré aux témoignages "à charge" excède très largement celui accordé à la contextualisation et aux voix contradictoires.
+
+PIÈCES JOINTES :
+- Captures d'écran du documentaire
+- Déclaration publique de Gaëlle Denys (Facebook, 09/11/2025)
+- Données SPF Sécurité sociale sur la fraude réelle
+
+Je demande au CSA :
+1. D'instruire cette plainte
+2. De sanctionner RTL Belgium si les manquements sont avérés
+3. De publier ses conclusions
+
+Fait à [VILLE], le [DATE]
+
+[SIGNATURE]`,
+
+                interpellation_parlementaire: `Question écrite à [MINISTRE]
+
+Objet : Diffusion du documentaire "Sans boulot : tous fraudeurs ?" et réformes Arizona
+
+Monsieur/Madame le/la Ministre,
+
+Le 7 novembre 2025, RTL-TVI a diffusé un documentaire intitulé "Sans boulot : tous fraudeurs ?" devant 410.860 téléspectateurs.
+
+Ce documentaire a fait l'objet de plus de 400 plaintes au CSA pour incitation à la discrimination et manipulation de témoignages.
+
+Je souhaite vous poser les questions suivantes :
+
+1. Le gouvernement a-t-il eu connaissance de ce documentaire avant sa diffusion ?
+
+2. Existe-t-il des contacts entre RTL Belgium et les cabinets ministériels concernant les réformes Arizona ?
+
+3. Comment le gouvernement explique-t-il le timing de cette diffusion, 21 jours après le vote des premières mesures Arizona ?
+
+4. Le gouvernement compte-t-il réagir aux accusations de stigmatisation portées par les professionnels du secteur social ?
+
+Je vous remercie de votre réponse.
+
+[SIGNATURE]`
+            },
+            
+            // Cibles et contacts
+            cibles: {
+                medias: [
+                    { nom: "RTL Belgium", twitter: "@RTLbelgium", email: "info@rtl.be" },
+                    { nom: "Christophe Deborsu", twitter: "@chaborsu", note: "Compte personnel" }
+                ],
+                regulateurs: [
+                    { nom: "CSA", email: "plainte@csa.be", site: "csa.be" },
+                    { nom: "CDJ", email: "info@lecdj.be", site: "lecdj.be", note: "Conseil de Déontologie Journalistique" }
+                ],
+                allies: [
+                    { nom: "RWLP", twitter: "@RWLP_be", site: "rwlp.be" },
+                    { nom: "ATD Quart Monde", twitter: "@ATaborsu_Monde_Be", site: "atd-quartmonde.be" },
+                    { nom: "Médor", twitter: "@MedorMag", site: "medor.coop", note: "Journalisme d'investigation" },
+                    { nom: "Apache", twitter: "@Apache_be", site: "apache.be", note: "Média flamand critique" }
+                ]
+            }
+        };
+        
+        // ═══════════════════════════════════════════════════════════════
+        // COMPOSANTS
+        // ═══════════════════════════════════════════════════════════════
+        
+        function CopyFeedback({ show }) {
+            return (
+                <div className={`copy-feedback ${show ? 'show' : ''}`}>
+                    ✓ COPIÉ DANS LE PRESSE-PAPIER
+                </div>
+            );
+        }
+        
+        function copyToClipboard(text, setCopied) {
+            navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
+        
+        // MODULE 1: RETOURNEUR DE CITATIONS
+        function Retourneur() {
+            const [selectedQuote, setSelectedQuote] = useState(null);
+            const [customRetournement, setCustomRetournement] = useState('');
+            const [copied, setCopied] = useState(false);
+            
+            const allQuotes = [
+                ...ARSENAL.citations.deborsu.map(q => ({...q, type: 'Deborsu'})),
+                ...ARSENAL.citations.politiques.map(q => ({...q, type: 'Politique'})),
+                ...ARSENAL.citations.rtl.map(q => ({...q, type: 'RTL'}))
+            ];
+            
+            const generatePost = () => {
+                if (!selectedQuote) return '';
+                const retournement = customRetournement || selectedQuote.retournement;
+                return `"${selectedQuote.texte}"
+— ${selectedQuote.auteur || 'Christophe Deborsu'}, ${selectedQuote.source}
+
+${retournement}
+
+${selectedQuote.hashtags.join(' ')} #ContreDeborsu`;
+            };
+            
+            return (
+                <div>
+                    <div className="section-head">
+                        <div className="section-num">01</div>
+                        <div>
+                            <div className="section-title">Retourneur</div>
+                            <div className="section-desc">Leurs mots. Leur contexte. Notre analyse. Leur honte.</div>
+                        </div>
+                    </div>
+                    
+                    <div className="grid-2">
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Sélectionne une citation</div>
+                            </div>
+                            <div className="card-body">
+                                {allQuotes.map((q, i) => (
+                                    <div 
+                                        key={i}
+                                        className="arsenal-item"
+                                        style={{
+                                            borderColor: selectedQuote === q ? 'var(--red)' : '#333',
+                                            cursor: 'pointer'
+                                        }}
+                                        onClick={() => {
+                                            setSelectedQuote(q);
+                                            setCustomRetournement(q.retournement);
+                                        }}
+                                    >
+                                        <div className="arsenal-head">
+                                            <div>
+                                                <span className="tag tag-red">{q.type}</span>
+                                                <div style={{marginTop: '0.5rem', fontStyle: 'italic'}}>
+                                                    "{q.texte.substring(0, 60)}..."
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Génère ton retournement</div>
+                                {selectedQuote && <div className="card-tag">PRÊT</div>}
+                            </div>
+                            <div className="card-body">
+                                {selectedQuote ? (
+                                    <>
+                                        <div className="quote">
+                                            <div className="quote-text">"{selectedQuote.texte}"</div>
+                                            <div className="quote-source">
+                                                — {selectedQuote.auteur || 'Christophe Deborsu'}, {selectedQuote.source}
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="field">
+                                            <label>Ton retournement (modifiable)</label>
+                                            <textarea
+                                                value={customRetournement}
+                                                onChange={e => setCustomRetournement(e.target.value)}
+                                            />
+                                        </div>
+                                        
+                                        <div className="output" style={{marginBottom: '1rem'}}>
+                                            {generatePost()}
+                                        </div>
+                                        
+                                        <button 
+                                            className="btn btn-red btn-block"
+                                            onClick={() => copyToClipboard(generatePost(), setCopied)}
+                                        >
+                                            Copier pour Twitter/X
+                                        </button>
+                                    </>
+                                ) : (
+                                    <div style={{color: '#666', textAlign: 'center', padding: '2rem'}}>
+                                        ← Sélectionne une citation à retourner
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <CopyFeedback show={copied} />
+                </div>
+            );
+        }
+        
+        // MODULE 2: ARSENAL STATISTIQUE
+        function ArsenalStats() {
+            const [copied, setCopied] = useState(false);
+            
+            return (
+                <div>
+                    <div className="section-head">
+                        <div className="section-num">02</div>
+                        <div>
+                            <div className="section-title">Arsenal Statistique</div>
+                            <div className="section-desc">Les chiffres qui tuent. Sources vérifiables. Imparables.</div>
+                        </div>
+                    </div>
+                    
+                    <div className="grid-3">
+                        {ARSENAL.chiffres.map((c, i) => (
+                            <div className="card" key={i}>
+                                <div className="card-head">
+                                    <div className="card-title">{c.label}</div>
+                                </div>
+                                <div className="card-body">
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1rem'}}>
+                                        <div>
+                                            <div className="counter-big">{c.valeur}</div>
+                                            <div className="counter-label">{c.label}</div>
+                                        </div>
+                                        <div style={{textAlign: 'right'}}>
+                                            <div style={{fontSize: '1.5rem', fontFamily: 'Space Mono', color: '#666'}}>{c.vs}</div>
+                                            <div className="counter-label">{c.vsLabel}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{
+                                        background: '#1a0000',
+                                        border: '1px solid var(--red)',
+                                        padding: '0.8rem',
+                                        marginBottom: '1rem'
+                                    }}>
+                                        <span style={{color: 'var(--red)', fontFamily: 'Space Mono', fontSize: '0.75rem'}}>
+                                            IMPACT: {c.impact}
+                                        </span>
+                                    </div>
+                                    
+                                    <div style={{fontSize: '0.75rem', color: '#666', marginBottom: '1rem'}}>
+                                        Source: {c.source}
+                                    </div>
+                                    
+                                    <button 
+                                        className="btn btn-outline btn-block"
+                                        onClick={() => {
+                                            const text = `${c.valeur} — ${c.label}\nvs\n${c.vs} — ${c.vsLabel}\n\n→ ${c.impact}\n\nSource: ${c.source}\n\n#Deborsu #Arizona #CPAS`;
+                                            copyToClipboard(text, setCopied);
+                                        }}
+                                    >
+                                        Copier ce ratio
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    
+                    <CopyFeedback show={copied} />
+                </div>
+            );
+        }
+        
+        // MODULE 3: DÉCRYPTEUR DE MANIPULATION
+        function Decrypteur() {
+            const [expanded, setExpanded] = useState(null);
+            const [copied, setCopied] = useState(false);
+            
+            return (
+                <div>
+                    <div className="section-head">
+                        <div className="section-num">03</div>
+                        <div>
+                            <div className="section-title">Décrypteur</div>
+                            <div className="section-desc">Les techniques de manipulation. Comment les voir. Comment riposter.</div>
+                        </div>
+                    </div>
+                    
+                    {ARSENAL.techniques.map((t, i) => (
+                        <div 
+                            className={`arsenal-item ${expanded === i ? 'open' : ''}`} 
+                            key={i}
+                        >
+                            <div 
+                                className="arsenal-head"
+                                onClick={() => setExpanded(expanded === i ? null : i)}
+                            >
+                                <div>
+                                    <span className="tag tag-red">{`0${i+1}`}</span>
+                                    <h3 style={{display: 'inline', marginLeft: '0.5rem'}}>{t.nom}</h3>
+                                </div>
+                                <span style={{color: '#666'}}>{expanded === i ? '−' : '+'}</span>
+                            </div>
+                            <div className="arsenal-body">
+                                <div className="manipulation-box">
+                                    <strong>Définition:</strong> {t.definition}
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <strong style={{color: 'var(--red)'}}>Exemple Deborsu:</strong>
+                                    <p style={{marginTop: '0.5rem', color: '#ccc'}}>{t.exemple_deborsu}</p>
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <strong style={{color: 'var(--green)'}}>Comment détecter:</strong>
+                                    <p style={{marginTop: '0.5rem', color: '#ccc'}}>{t.detecter}</p>
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <strong style={{color: 'var(--yellow)'}}>Contre-mesure:</strong>
+                                    <p style={{marginTop: '0.5rem', color: '#ccc'}}>{t.contre_mesure}</p>
+                                </div>
+                                
+                                <button 
+                                    className="btn"
+                                    onClick={() => {
+                                        const thread = `🧵 THREAD : Technique de manipulation — ${t.nom.toUpperCase()}
+
+1/ Définition : ${t.definition}
+
+2/ Exemple concret (documentaire Deborsu) : ${t.exemple_deborsu}
+
+3/ Comment le détecter : ${t.detecter}
+
+4/ Comment riposter : ${t.contre_mesure}
+
+5/ RT ce thread. L'éducation aux médias, c'est de l'autodéfense intellectuelle.
+
+#ManipulationMédiatique #Deborsu #LitteratieMédiatique`;
+                                        copyToClipboard(thread, setCopied);
+                                    }}
+                                >
+                                    Générer un thread éducatif
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                    
+                    <CopyFeedback show={copied} />
+                </div>
+            );
+        }
+        
+        // MODULE 4: GÉNÉRATEUR D'ACTIONS
+        function Generateur() {
+            const [activeTemplate, setActiveTemplate] = useState('plainte');
+            const [formData, setFormData] = useState({
+                nom: '',
+                ville: '',
+                date: new Date().toLocaleDateString('fr-BE'),
+                profession: '',
+                ministre: '',
+                question: ''
+            });
+            const [copied, setCopied] = useState(false);
+            
+            const generateDocument = () => {
+                switch(activeTemplate) {
+                    case 'plainte':
+                        return ARSENAL.templates.plainte_csa
+                            .replace('[VILLE]', formData.ville || '[VILLE]')
+                            .replace('[DATE]', formData.date)
+                            .replace('[SIGNATURE]', formData.nom || '[NOM PRÉNOM]');
+                    case 'interpellation':
+                        return ARSENAL.templates.interpellation_parlementaire
+                            .replace('[MINISTRE]', formData.ministre || '[NOM DU MINISTRE]')
+                            .replace('[SIGNATURE]', formData.nom || '[NOM PRÉNOM]');
+                    default:
+                        return '';
+                }
+            };
+            
+            return (
+                <div>
+                    <div className="section-head">
+                        <div className="section-num">04</div>
+                        <div>
+                            <div className="section-title">Générateur</div>
+                            <div className="section-desc">Documents prêts à l'emploi. Plaintes, interpellations, posts.</div>
+                        </div>
+                    </div>
+                    
+                    <div style={{display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap'}}>
+                        <button 
+                            className={`btn ${activeTemplate === 'plainte' ? 'btn-red' : 'btn-outline'}`}
+                            onClick={() => setActiveTemplate('plainte')}
+                        >
+                            Plainte CSA
+                        </button>
+                        <button 
+                            className={`btn ${activeTemplate === 'interpellation' ? 'btn-red' : 'btn-outline'}`}
+                            onClick={() => setActiveTemplate('interpellation')}
+                        >
+                            Question parlementaire
+                        </button>
+                    </div>
+                    
+                    <div className="grid-2">
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Tes infos</div>
+                            </div>
+                            <div className="card-body">
+                                <div className="field">
+                                    <label>Nom complet</label>
+                                    <input 
+                                        type="text"
+                                        value={formData.nom}
+                                        onChange={e => setFormData({...formData, nom: e.target.value})}
+                                        placeholder="Jean Dupont"
+                                    />
+                                </div>
+                                
+                                <div className="field">
+                                    <label>Ville</label>
+                                    <input 
+                                        type="text"
+                                        value={formData.ville}
+                                        onChange={e => setFormData({...formData, ville: e.target.value})}
+                                        placeholder="Bruxelles"
+                                    />
+                                </div>
+                                
+                                {activeTemplate === 'interpellation' && (
+                                    <div className="field">
+                                        <label>Ministre concerné</label>
+                                        <select
+                                            value={formData.ministre}
+                                            onChange={e => setFormData({...formData, ministre: e.target.value})}
+                                        >
+                                            <option value="">Sélectionner...</option>
+                                            <option value="M. le Ministre de l'Emploi">Ministre de l'Emploi</option>
+                                            <option value="M. le Ministre des Affaires sociales">Ministre des Affaires sociales</option>
+                                            <option value="Mme la Ministre des Médias">Ministre des Médias (FWB)</option>
+                                        </select>
+                                    </div>
+                                )}
+                                
+                                <div style={{marginTop: '1.5rem', padding: '1rem', background: '#111', fontSize: '0.8rem'}}>
+                                    <strong>Contacts utiles:</strong><br/><br/>
+                                    <strong>CSA:</strong> plainte@csa.be<br/>
+                                    <strong>CDJ:</strong> info@lecdj.be<br/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Document généré</div>
+                                <div className="card-tag">PRÊT À ENVOYER</div>
+                            </div>
+                            <div className="card-body">
+                                <div className="output" style={{maxHeight: '500px'}}>
+                                    {generateDocument()}
+                                </div>
+                                
+                                <div style={{display: 'flex', gap: '0.5rem', marginTop: '1rem'}}>
+                                    <button 
+                                        className="btn btn-red"
+                                        style={{flex: 1}}
+                                        onClick={() => copyToClipboard(generateDocument(), setCopied)}
+                                    >
+                                        Copier
+                                    </button>
+                                    <button 
+                                        className="btn"
+                                        style={{flex: 1}}
+                                        onClick={() => {
+                                            const blob = new Blob([generateDocument()], {type: 'text/plain'});
+                                            const url = URL.createObjectURL(blob);
+                                            const a = document.createElement('a');
+                                            a.href = url;
+                                            a.download = `${activeTemplate}-deborsu.txt`;
+                                            a.click();
+                                        }}
+                                    >
+                                        Télécharger
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <CopyFeedback show={copied} />
+                </div>
+            );
+        }
+        
+        // MODULE 5: VIRALITÉ
+        function Viralite() {
+            const [selectedTemplate, setSelectedTemplate] = useState(0);
+            const [customContent, setCustomContent] = useState('');
+            const [copied, setCopied] = useState(false);
+            
+            const templates = ARSENAL.templates.twitter;
+            
+            useEffect(() => {
+                setCustomContent(templates[selectedTemplate].template);
+            }, [selectedTemplate]);
+            
+            return (
+                <div>
+                    <div className="section-head">
+                        <div className="section-num">05</div>
+                        <div>
+                            <div className="section-title">Viralité</div>
+                            <div className="section-desc">Templates de posts. Prêts à personnaliser. Prêts à envoyer.</div>
+                        </div>
+                    </div>
+                    
+                    <div className="grid-2">
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Templates Twitter/X</div>
+                            </div>
+                            <div className="card-body">
+                                {templates.map((t, i) => (
+                                    <div 
+                                        key={i}
+                                        style={{
+                                            padding: '1rem',
+                                            marginBottom: '0.5rem',
+                                            border: `1px solid ${selectedTemplate === i ? 'var(--red)' : '#333'}`,
+                                            cursor: 'pointer',
+                                            background: selectedTemplate === i ? '#1a0000' : 'transparent'
+                                        }}
+                                        onClick={() => setSelectedTemplate(i)}
+                                    >
+                                        <span className="tag tag-white">{`0${i+1}`}</span>
+                                        <span style={{marginLeft: '0.5rem'}}>{t.titre}</span>
+                                    </div>
+                                ))}
+                                
+                                <div style={{marginTop: '1.5rem'}}>
+                                    <strong>Hashtags suggérés:</strong>
+                                    <div style={{marginTop: '0.5rem'}}>
+                                        {['#Deborsu', '#TousFraudeurs', '#Arizona', '#RTL', '#CSA', '#CPAS', '#ManipulationMédiatique', '#ContreDeborsu'].map(h => (
+                                            <span 
+                                                key={h} 
+                                                className="tag tag-red"
+                                                style={{cursor: 'pointer'}}
+                                                onClick={() => {
+                                                    if (!customContent.includes(h)) {
+                                                        setCustomContent(customContent + '\n' + h);
+                                                    }
+                                                }}
+                                            >
+                                                {h}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Ton post</div>
+                                <div className="card-tag" style={{background: customContent.length > 280 ? 'var(--red)' : 'var(--green)'}}>
+                                    {customContent.length}/280
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                <div className="field">
+                                    <label>Personnalise (remplace les [CHAMPS])</label>
+                                    <textarea
+                                        value={customContent}
+                                        onChange={e => setCustomContent(e.target.value)}
+                                        style={{minHeight: '250px'}}
+                                    />
+                                </div>
+                                
+                                <button 
+                                    className="btn btn-red btn-block"
+                                    onClick={() => copyToClipboard(customContent, setCopied)}
+                                >
+                                    Copier et poster
+                                </button>
+                                
+                                <div style={{marginTop: '1rem', fontSize: '0.8rem', color: '#666'}}>
+                                    Conseil: poste aux heures de pointe (12h-14h, 18h-21h)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <CopyFeedback show={copied} />
+                </div>
+            );
+        }
+        
+        // MODULE 6: CIBLES
+        function Cibles() {
+            return (
+                <div>
+                    <div className="section-head">
+                        <div className="section-num">06</div>
+                        <div>
+                            <div className="section-title">Cibles & Alliés</div>
+                            <div className="section-desc">Qui interpeller. Qui relayer. Qui rejoindre.</div>
+                        </div>
+                    </div>
+                    
+                    <div className="grid-3">
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">À interpeller</div>
+                                <div className="card-tag" style={{background: 'var(--red)'}}>CIBLES</div>
+                            </div>
+                            <div className="card-body">
+                                {ARSENAL.cibles.medias.map((c, i) => (
+                                    <div key={i} style={{
+                                        padding: '0.8rem',
+                                        borderBottom: '1px solid #333',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center'
+                                    }}>
+                                        <div>
+                                            <strong>{c.nom}</strong>
+                                            {c.note && <div style={{fontSize: '0.75rem', color: '#666'}}>{c.note}</div>}
+                                        </div>
+                                        <a 
+                                            href={`https://twitter.com/${c.twitter?.replace('@', '')}`} 
+                                            target="_blank"
+                                            style={{color: 'var(--red)', fontFamily: 'Space Mono', fontSize: '0.8rem'}}
+                                        >
+                                            {c.twitter}
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Régulateurs</div>
+                                <div className="card-tag" style={{background: 'var(--yellow)', color: 'var(--black)'}}>OFFICIELS</div>
+                            </div>
+                            <div className="card-body">
+                                {ARSENAL.cibles.regulateurs.map((c, i) => (
+                                    <div key={i} style={{
+                                        padding: '0.8rem',
+                                        borderBottom: '1px solid #333'
+                                    }}>
+                                        <strong>{c.nom}</strong>
+                                        {c.note && <div style={{fontSize: '0.75rem', color: '#666'}}>{c.note}</div>}
+                                        <div style={{marginTop: '0.3rem', fontFamily: 'Space Mono', fontSize: '0.8rem'}}>
+                                            <span style={{color: 'var(--green)'}}>{c.email}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="card">
+                            <div className="card-head">
+                                <div className="card-title">Alliés</div>
+                                <div className="card-tag" style={{background: 'var(--green)', color: 'var(--black)'}}>RELAYER</div>
+                            </div>
+                            <div className="card-body">
+                                {ARSENAL.cibles.allies.map((c, i) => (
+                                    <div key={i} style={{
+                                        padding: '0.8rem',
+                                        borderBottom: '1px solid #333'
+                                    }}>
+                                        <strong>{c.nom}</strong>
+                                        {c.note && <div style={{fontSize: '0.75rem', color: '#666'}}>{c.note}</div>}
+                                        <div style={{marginTop: '0.3rem'}}>
+                                            <a 
+                                                href={`https://${c.site}`} 
+                                                target="_blank"
+                                                style={{color: 'var(--green)', fontFamily: 'Space Mono', fontSize: '0.8rem', marginRight: '1rem'}}
+                                            >
+                                                {c.site}
+                                            </a>
+                                            {c.twitter && (
+                                                <a 
+                                                    href={`https://twitter.com/${c.twitter?.replace('@', '')}`} 
+                                                    target="_blank"
+                                                    style={{color: '#666', fontFamily: 'Space Mono', fontSize: '0.8rem'}}
+                                                >
+                                                    {c.twitter}
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // APP PRINCIPALE
+        // ═══════════════════════════════════════════════════════════════
+        
+        function App() {
+            const [activeModule, setActiveModule] = useState('retourneur');
+            
+            const modules = [
+                { id: 'retourneur', label: 'RETOURNEUR', component: Retourneur },
+                { id: 'arsenal', label: 'ARSENAL', component: ArsenalStats },
+                { id: 'decrypteur', label: 'DÉCRYPTEUR', component: Decrypteur },
+                { id: 'generateur', label: 'GÉNÉRATEUR', component: Generateur },
+                { id: 'viralite', label: 'VIRALITÉ', component: Viralite },
+                { id: 'cibles', label: 'CIBLES', component: Cibles }
+            ];
+            
+            const ActiveComponent = modules.find(m => m.id === activeModule)?.component || Retourneur;
+            
+            return (
+                <div>
+                    <header className="masthead">
+                        <div className="logo">
+                            CONTRE<span>—</span>FEU
+                        </div>
+                        <div className="status">
+                            SYSTÈME OPÉRATIONNEL — {ARSENAL.chiffres.length} MUNITIONS CHARGÉES
+                        </div>
+                    </header>
+                    
+                    <nav className="nav">
+                        {modules.map(m => (
+                            <button
+                                key={m.id}
+                                className={`nav-item ${activeModule === m.id ? 'active' : ''}`}
+                                onClick={() => setActiveModule(m.id)}
+                            >
+                                {m.label}
+                            </button>
+                        ))}
+                    </nav>
+                    
+                    <main className="main">
+                        <ActiveComponent />
+                    </main>
+                    
+                    <footer className="footer">
+                        <p>
+                            CONTRE—FEU — Arsenal de contre-pouvoir informationnel<br/>
+                            Toutes les données sont sourcées et vérifiables.<br/>
+                            <a href="https://ouaisfieu.be">ouaisfieu.be</a> — Fork. Hack. Spread.
+                        </p>
+                    </footer>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
