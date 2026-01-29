@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="fr-BE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ ACTE D'ACCUSATION | Tribunal Citoyen Extraordinaire pour les Crimes contre la Cohésion Nationale</title>
+    <meta name="description" content="[FICTION SATIRIQUE] Acte d'accusation contre les auteurs du reportage 'Tous Fraudeurs' pour crimes contre la cohésion nationale, sabotage du moral civil et complicité de guerre de classe.">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+        
+        :root {
+            --parchment: #f4f1e8;
+            --ink: #1a1a1a;
+            --blood: #8b0000;
+            --gold: #c9a227;
+            --seal: #6b0f1a;
+            --shadow: rgba(0,0,0,0.1);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 29px,
+                    rgba(0,0,0,0.03) 29px,
+                    rgba(0,0,0,0.03) 30px
+                ),
+                linear-gradient(135deg, #f5f2e9 0%, #e8e4d9 100%);
+            color: var(--ink);
+            line-height: 1.9;
+            font-size: 17px;
+            min-height: 100vh;
+        }
+        
+        /* === DISCLAIMER BANNER === */
+        .disclaimer {
+            background: var(--blood);
+            color: white;
+            padding: 16px 24px;
+            text-align: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .disclaimer strong {
+            color: var(--gold);
+        }
+        
+        /* === DOCUMENT === */
+        .document {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 80px;
+            background: var(--parchment);
+            box-shadow: 0 0 60px var(--shadow);
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .document {
+                padding: 40px 24px;
+            }
+        }
+        
+        /* Aged paper effect */
+        .document::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 0% 0%, rgba(139,69,19,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 100%, rgba(139,69,19,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        /* === HEADER === */
+        .doc-header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 3px double var(--ink);
+        }
+        
+        .seal {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            background: var(--seal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 
+                0 4px 8px rgba(0,0,0,0.3),
+                inset 0 2px 4px rgba(255,255,255,0.1);
+        }
+        
+        .doc-title {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--blood);
+            margin-bottom: 8px;
+        }
+        
+        .doc-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--ink);
+            opacity: 0.7;
+        }
+        
+        .doc-reference {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--blood);
+            margin-top: 16px;
+        }
+        
+        /* === SECTIONS === */
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--blood);
+            margin: 48px 0 24px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--gold);
+        }
+        
+        h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 700;
+            margin: 32px 0 16px;
+            color: var(--ink);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+            text-indent: 2em;
+        }
+        
+        p.no-indent {
+            text-indent: 0;
+        }
+        
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(201,162,39,0.3) 60%);
+            padding: 0 2px;
+        }
+        
+        /* === ACCUSÉS === */
+        .accused-box {
+            background: rgba(107,15,26,0.05);
+            border: 2px solid var(--seal);
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .accused-title {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--blood);
+            margin-bottom: 16px;
+        }
+        
+        .accused-list {
+            list-style: none;
+        }
+        
+        .accused-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--gold);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .accused-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .accused-name {
+            font-weight: 700;
+        }
+        
+        .accused-role {
+            font-style: italic;
+            color: #666;
+        }
+        
+        /* === CHARGES === */
+        .charge {
+            background: white;
+            border-left: 4px solid var(--blood);
+            padding: 24px;
+            margin: 24px 0;
+            box-shadow: 2px 2px 10px var(--shadow);
+        }
+        
+        .charge-number {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: var(--blood);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .charge-title {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .charge-article {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: #666;
+            margin-top: 16px;
+        }
+        
+        /* === PREUVES === */
+        .evidence {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 16px 0;
+            font-size: 15px;
+        }
+        
+        .evidence-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--blood);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        /* === CITATIONS === */
+        blockquote {
+            border-left: 3px solid var(--gold);
+            padding: 16px 24px;
+            margin: 24px 0;
+            background: rgba(201,162,39,0.05);
+            font-style: italic;
+        }
+        
+        blockquote cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 14px;
+            font-style: normal;
+            color: #666;
+        }
+        
+        /* === VERDICT === */
+        .verdict-box {
+            background: var(--seal);
+            color: var(--parchment);
+            padding: 32px;
+            margin: 48px 0;
+            text-align: center;
+        }
+        
+        .verdict-title {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 24px;
+        }
+        
+        .verdict-text {
+            font-size: 18px;
+            line-height: 2;
+        }
+        
+        /* === SIGNATURES === */
+        .signatures {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 2px solid var(--ink);
+        }
+        
+        .signature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+        
+        .signature-item {
+            text-align: center;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid var(--ink);
+            height: 40px;
+            margin-bottom: 8px;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            color: var(--ink);
+        }
+        
+        .signature-name {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .signature-title {
+            font-size: 11px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* === STAMPS === */
+        .stamps {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+        
+        .stamp {
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--blood);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--blood);
+            transform: rotate(-15deg);
+            opacity: 0.8;
+        }
+        
+        .stamp.approved {
+            border-color: darkgreen;
+            color: darkgreen;
+        }
+        
+        /* === FOOTER === */
+        .doc-footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--ink);
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        
+        /* === ANNOTATIONS === */
+        .annotation {
+            background: #ffffa0;
+            padding: 2px 4px;
+            font-size: 14px;
+            transform: rotate(-2deg);
+            display: inline-block;
+            margin: 0 4px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        /* === REDACTED === */
+        .redacted {
+            background: var(--ink);
+            color: var(--ink);
+            padding: 0 8px;
+            user-select: none;
+        }
+        
+        .redacted:hover {
+            color: var(--parchment);
+        }
+        
+        /* Coffee stain effect */
+        .coffee-stain {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(139,90,43,0.15) 0%, rgba(139,90,43,0.05) 50%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .coffee-stain.top-right {
+            top: 120px;
+            right: 60px;
+        }
+        
+        .coffee-stain.bottom-left {
+            bottom: 200px;
+            left: 40px;
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+        ⚠️ <strong>FICTION SATIRIQUE</strong> — Ce document est une œuvre de satire politique et de fiction spéculative. 
+        Il pousse à l'absurde la logique de responsabilité médiatique pour faire réfléchir. 
+        Aucune poursuite réelle n'est suggérée. <strong>Mais la réflexion, elle, est sérieuse.</strong>
+    </div>
+    
+    <div class="document">
+        <!-- Coffee stains for authenticity -->
+        <div class="coffee-stain top-right"></div>
+        <div class="coffee-stain bottom-left"></div>
+        
+        <!-- HEADER -->
+        <header class="doc-header">
+            <div class="seal">⚖️</div>
+            <h1 class="doc-title">Acte d'Accusation</h1>
+            <p class="doc-subtitle">Tribunal Citoyen Extraordinaire pour les Crimes contre la Cohésion Nationale</p>
+            <p class="doc-reference">Dossier N° TCE-2026-001-BE | Classification : CONSCIENCE PUBLIQUE</p>
+        </header>
+        
+        <!-- PRÉAMBULE -->
+        <section>
+            <h2>Préambule</h2>
+            <p>CONSIDÉRANT que la cohésion nationale constitue le fondement de toute société démocratique ;</p>
+            <p>CONSIDÉRANT que les médias audiovisuels disposent d'une puissance de frappe cognitive sans précédent, capable de façonner en une soirée la perception de 410.860 esprits ;</p>
+            <p>CONSIDÉRANT que cette puissance implique une responsabilité proportionnelle ;</p>
+            <p>CONSIDÉRANT que l'Histoire a démontré, de Radio Mille Collines à Fox News, que les médias peuvent être des armes de destruction massive du tissu social ;</p>
+            <p>CONSIDÉRANT que le silence des institutions face à ces dérives constitue une forme de complicité passive ;</p>
+            <p>Le Tribunal Citoyen Extraordinaire, réuni en session plénière ce 29 janvier 2026, émet le présent acte d'accusation.</p>
+        </section>
+        
+        <!-- ACCUSÉS -->
+        <section>
+            <h2>Parties Accusées</h2>
+            
+            <div class="accused-box">
+                <div class="accused-title">Accusés Principaux</div>
+                <ul class="accused-list">
+                    <li>
+                        <span class="accused-name">RTL Belgium SA</span>
+                        <span class="accused-role">Diffuseur — Personne morale</span>
+                    </li>
+                    <li>
+                        <span class="accused-name">Christophe DEBORSU</span>
+                        <span class="accused-role">Réalisateur — Auteur intellectuel</span>
+                    </li>
+                    <li>
+                        <span class="accused-name">[Direction Éditoriale RTL]</span>
+                        <span class="accused-role">Validation du contenu — Chaîne de commandement</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="accused-box">
+                <div class="accused-title">Accusés par Complicité</div>
+                <ul class="accused-list">
+                    <li>
+                        <span class="accused-name">[Producteur exécutif]</span>
+                        <span class="accused-role">Financement et logistique</span>
+                    </li>
+                    <li>
+                        <span class="accused-name">[Chef monteur]</span>
+                        <span class="accused-role">Manipulation narrative par le montage</span>
+                    </li>
+                    <li>
+                        <span class="accused-name">[Service juridique RTL]</span>
+                        <span class="accused-role">Validation légale d'un contenu éthiquement contestable</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="accused-box">
+                <div class="accused-title">Accusés par Omission Coupable</div>
+                <ul class="accused-list">
+                    <li>
+                        <span class="accused-name">[Médias concurrents]</span>
+                        <span class="accused-role">Silence corporatiste face au scandale</span>
+                    </li>
+                    <li>
+                        <span class="accused-name">[Institutions de régulation]</span>
+                        <span class="accused-role">Lenteur procédurale équivalant à impunité</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- CONTEXTE GÉOPOLITIQUE -->
+        <section>
+            <h2>Contexte : La Belgique en État de Siège Social</h2>
+            
+            <p>Au moment des faits (7 novembre 2025), le Royaume de Belgique se trouvait dans une situation assimilable à un <span class="highlight">état de guerre sociale non déclarée</span> :</p>
+            
+            <div class="evidence">
+                <div class="evidence-label">Situation économique</div>
+                <p class="no-indent">• Négociations gouvernementales Arizona en cours — coupes budgétaires imminentes<br>
+                • 500.000+ demandeurs d'emploi en Belgique<br>
+                • 90.000 exclusions du chômage depuis les réformes précédentes<br>
+                • Inflation ayant érodé le pouvoir d'achat de 15%+ sur 3 ans<br>
+                • Précarisation croissante de la classe moyenne</p>
+            </div>
+            
+            <div class="evidence">
+                <div class="evidence-label">Tension sociale</div>
+                <p class="no-indent">• Manifestations syndicales récurrentes<br>
+                • Taux de confiance dans les institutions au plus bas historique<br>
+                • Montée des discours populistes exploitant le ressentiment<br>
+                • Fracture communautaire exacerbée par les questions de transferts Nord-Sud</p>
+            </div>
+            
+            <p>Dans ce contexte de <span class="highlight">poudrière sociale</span>, la diffusion d'un contenu visant à retourner une partie de la population contre une autre constitue un acte d'une gravité exceptionnelle.</p>
+            
+            <blockquote>
+                "En temps de guerre, saper le moral de la nation est un acte de trahison. En temps de paix sociale fragile, saper la solidarité entre citoyens l'est tout autant."
+                <cite>— Doctrine du Tribunal Citoyen Extraordinaire</cite>
+            </blockquote>
+        </section>
+        
+        <!-- CHEF D'ACCUSATION 1 -->
+        <section>
+            <h2>Chefs d'Accusation</h2>
+            
+            <div class="charge">
+                <div class="charge-number">Chef d'accusation I</div>
+                <div class="charge-title">HAUTE TRAHISON INFORMATIONNELLE</div>
+                
+                <p>Les accusés sont poursuivis pour avoir, de manière préméditée et coordonnée, diffusé à 410.860 citoyens belges un contenu conçu pour :</p>
+                
+                <p>a) <strong>Fracturer le corps social</strong> en opposant artificiellement les "travailleurs" aux "assistés" — catégories dont la porosité est scientifiquement établie (67% des chômeurs retrouvent un emploi dans les 12 mois) ;</p>
+                
+                <p>b) <strong>Fabriquer un ennemi intérieur</strong> — les allocataires sociaux — pour détourner l'attention des véritables dysfonctionnements systémiques (fraude fiscale : 30 milliards €/an vs fraude sociale : ~200 millions €/an, soit un ratio de 150:1) ;</p>
+                
+                <p>c) <strong>Préparer psychologiquement la population</strong> à accepter des mesures d'austérité socialement destructrices, en les présentant comme une "correction" d'abus largement fantasmés.</p>
+                
+                <div class="evidence">
+                    <div class="evidence-label">Pièce à conviction A — Synchronisation suspecte</div>
+                    <p class="no-indent">Le documentaire a été diffusé le <strong>7 novembre 2025</strong>.<br>
+                    L'ONEM a envoyé <strong>47.000 lettres</strong> de contrôle le <strong>12 novembre 2025</strong>.<br>
+                    Intervalle : <strong>5 jours</strong>.<br>
+                    Probabilité de coïncidence : <span class="annotation">À déterminer</span></p>
+                </div>
+                
+                <p class="charge-article">Réf. : Code Citoyen Imaginaire, Art. 1 — "Nul ne peut utiliser les moyens de communication de masse pour dresser une partie du peuple contre une autre."</p>
+            </div>
+            
+            <div class="charge">
+                <div class="charge-number">Chef d'accusation II</div>
+                <div class="charge-title">CRIME DE PROPAGANDE EN TEMPS DE CRISE</div>
+                
+                <p>Les accusés sont poursuivis pour avoir produit et diffusé un contenu présentant toutes les caractéristiques de la <span class="highlight">propagande de guerre de classe</span> :</p>
+                
+                <p>a) <strong>Déshumanisation de l'ennemi désigné</strong> — Les allocataires sont présentés non comme des citoyens en difficulté mais comme des "fraudeurs", des "profiteurs", des parasites du corps social ;</p>
+                
+                <p>b) <strong>Omission systématique des données contradictoires</strong> — Le taux réel de fraude sociale (<3%) n'est jamais mentionné. Les causes structurelles du chômage sont ignorées. Le ratio fraude fiscale/sociale (150:1) est occulté ;</p>
+                
+                <p>c) <strong>Manipulation émotionnelle par le montage</strong> — Une heure d'interview de Gaëlle Denys (CPAS Verviers) réduite à 30 secondes. Ratio de censure : 120:1. Seuls les éléments servant le récit accusatoire ont été conservés ;</p>
+                
+                <p>d) <strong>Absence de contradictoire</strong> — Aucun économiste, aucun sociologue, aucun représentant syndical, aucune association de défense des droits n'a été invité à contrebalancer le récit.</p>
+                
+                <div class="evidence">
+                    <div class="evidence-label">Pièce à conviction B — Checklist de propagande (Chomsky)</div>
+                    <p class="no-indent">✓ Filtre de propriété (RTL = groupe privé à but lucratif)<br>
+                    ✓ Filtre publicitaire (annonceurs = classes aisées)<br>
+                    ✓ Filtre des sources (ONEM, pas les syndicats)<br>
+                    ✓ Filtre des critiques (aucune voix discordante)<br>
+                    ✓ Idéologie dominante (néolibéralisme = évidence)<br>
+                    <strong>5/5 filtres du "Manufacturing Consent" validés.</strong></p>
+                </div>
+                
+                <p class="charge-article">Réf. : Principes de Nuremberg, adaptés — "La propagande visant à inciter à la persécution d'un groupe social constitue un crime contre l'humanité."</p>
+            </div>
+            
+            <div class="charge">
+                <div class="charge-number">Chef d'accusation III</div>
+                <div class="charge-title">COMPLICITÉ DE VIOLENCE PSYCHOLOGIQUE DE MASSE</div>
+                
+                <p>Les accusés sont poursuivis pour avoir, en connaissance de cause, infligé des <span class="highlight">dommages psychologiques mesurables</span> à des populations vulnérables :</p>
+                
+                <p>a) <strong>Dommages directs aux personnes filmées</strong> — Laetitia a déclaré avoir reçu "énormément de messages et d'insultes" suite à la diffusion. Elle a été harcelée dans la rue. Son image sociale a été détruite ;</p>
+                
+                <p>b) <strong>Dommages indirects à la population allocataire</strong> — Les études scientifiques établissent que la stigmatisation médiatique augmente les symptômes dépressifs de 19%, la probabilité de dépression majeure de 29%, et provoque un non-recours aux droits de 20 à 50% ;</p>
+                
+                <p>c) <strong>Dommages collatéraux à la cohésion sociale</strong> — Renforcement des préjugés, légitimation de la discrimination à l'embauche, justification de politiques d'austérité destructrices.</p>
+                
+                <div class="evidence">
+                    <div class="evidence-label">Pièce à conviction C — Études scientifiques</div>
+                    <p class="no-indent">• Pak (2020) : +19% symptômes dépressifs, +29% dépression majeure<br>
+                    • O'Donnell (2015) : 44% de la variance des symptômes physiques expliquée par stigmatisation<br>
+                    • Harvard Kennedy School : 20-50% de non-recours aux droits par honte<br>
+                    • Joseph Rowntree Foundation : effets de "Benefits Street" mesurables 5 ans après</p>
+                </div>
+                
+                <p class="charge-article">Réf. : Convention de Genève, par analogie — "Infliger intentionnellement des souffrances psychologiques à des populations civiles constitue un traitement inhumain."</p>
+            </div>
+            
+            <div class="charge">
+                <div class="charge-number">Chef d'accusation IV</div>
+                <div class="charge-title">SABOTAGE DU CONTRAT SOCIAL BELGE</div>
+                
+                <p>Les accusés sont poursuivis pour avoir activement contribué à la <span class="highlight">destruction du modèle social belge</span> — un héritage de décennies de compromis démocratiques :</p>
+                
+                <p>a) <strong>Attaque contre le principe de solidarité</strong> — Le système belge de sécurité sociale repose sur la solidarité entre actifs et inactifs, entre bien-portants et malades, entre générations. Ce reportage vise à briser ce pacte ;</p>
+                
+                <p>b) <strong>Collaboration objective avec les intérêts de l'austérité</strong> — Le timing du reportage (5 jours avant les lettres ONEM, en pleine négociation Arizona) suggère une coordination, explicite ou implicite, avec les forces politiques souhaitant démanteler les protections sociales ;</p>
+                
+                <p>c) <strong>Légitimation médiatique de la régression sociale</strong> — En présentant les allocataires comme des fraudeurs, le reportage rend "acceptable" leur appauvrissement programmé.</p>
+                
+                <div class="evidence">
+                    <div class="evidence-label">Pièce à conviction D — Le lien familial non déclaré</div>
+                    <p class="no-indent">Christophe DEBORSU est l'oncle de Charlotte DEBORSU, <strong>députée MR</strong> (parti membre de la coalition Arizona).<br>
+                    Ce lien familial n'a jamais été déclaré au public.<br>
+                    Le MR est le principal promoteur des coupes dans les allocations chômage.<br>
+                    <span class="annotation">Conflit d'intérêts ?</span></p>
+                </div>
+                
+                <p class="charge-article">Réf. : Constitution belge, Art. 23 — "Chacun a le droit de mener une vie conforme à la dignité humaine." — Ce droit a été bafoué.</p>
+            </div>
+            
+            <div class="charge">
+                <div class="charge-number">Chef d'accusation V</div>
+                <div class="charge-title">TÉLÉGUIDAGE PRÉSUMÉ PAR INTÉRÊTS ÉTRANGERS AU BIEN COMMUN</div>
+                
+                <p>Les accusés sont poursuivis pour avoir potentiellement agi sous l'influence d'<span class="highlight">intérêts incompatibles avec le bien commun</span> :</p>
+                
+                <p>a) <strong>Intérêts capitalistiques</strong> — RTL Belgium appartient au groupe RTL (Bertelsmann), multinationale dont les intérêts ne coïncident pas nécessairement avec ceux du peuple belge ;</p>
+                
+                <p>b) <strong>Intérêts politiques partisans</strong> — Le lien familial MR non déclaré soulève la question d'une influence politique sur le contenu éditorial ;</p>
+                
+                <p>c) <strong>Intérêts de classe</strong> — Les propriétaires de médias, les annonceurs et les éditorialistes appartiennent structurellement aux classes supérieures. Leur vision du monde imprègne inconsciemment (ou consciemment) les contenus produits.</p>
+                
+                <blockquote>
+                    "Il est difficile de faire comprendre quelque chose à quelqu'un quand son salaire dépend du fait qu'il ne le comprenne pas."
+                    <cite>— Upton Sinclair</cite>
+                </blockquote>
+                
+                <p class="charge-article">Réf. : Droit des peuples à disposer d'une information libre — "Un peuple désinformé ne peut exercer sa souveraineté."</p>
+            </div>
+        </section>
+        
+        <!-- CIRCONSTANCES AGGRAVANTES -->
+        <section>
+            <h2>Circonstances Aggravantes</h2>
+            
+            <h3>1. Préméditation manifeste</h3>
+            <p>Un documentaire de 45 minutes nécessite des semaines de préparation, de tournage et de montage. Chaque décision éditoriale — qui interviewer, quoi garder, quoi couper — a été délibérée. L'absence de contradictoire n'est pas un oubli : c'est un choix.</p>
+            
+            <h3>2. Récidive institutionnelle</h3>
+            <p>RTL Belgium a déjà été sanctionné par le CSA : 8.000€ d'amende en 2021, 3.000€ en 2022. La chaîne connaît les règles et choisit de les violer quand le gain (audience, influence) dépasse le coût (amendes dérisoires).</p>
+            
+            <h3>3. Abus de position dominante informationnelle</h3>
+            <p>RTL-TVI est la chaîne privée la plus regardée en Belgique francophone. Avec 410.860 téléspectateurs et 39,1% de part de marché, le reportage a touché une proportion significative de la population. Cette puissance de feu implique une responsabilité proportionnelle.</p>
+            
+            <h3>4. Ciblage des plus vulnérables</h3>
+            <p>Les personnes filmées — Laetitia, Jacqueline, les habitants de la rue de Dison — sont par définition en situation de précarité. Elles n'ont pas les moyens de se défendre médiatiquement ou juridiquement. Les accuser publiquement de fraude revient à tirer sur une ambulance.</p>
+            
+            <h3>5. Exploitation du timing politique</h3>
+            <p>La diffusion à 5 jours des lettres ONEM et en pleine négociation Arizona ne peut être fortuite. Même si aucune coordination explicite n'est prouvée, l'effet de synergie a été recherché ou, au minimum, accepté.</p>
+        </section>
+        
+        <!-- CIRCONSTANCES ATTÉNUANTES -->
+        <section>
+            <h2>Circonstances Atténuantes (pour la forme)</h2>
+            
+            <p>Le Tribunal, soucieux d'équité, note les éléments suivants :</p>
+            
+            <p>a) Les accusés ont agi dans un <strong>système médiatique structurellement biaisé</strong> qui récompense le sensationnalisme et punit la nuance. Ils sont en partie victimes d'un environnement toxique ;</p>
+            
+            <p>b) La <strong>formation journalistique</strong> actuelle n'insiste pas suffisamment sur la responsabilité sociale des médias. Les accusés peuvent arguer d'une forme d'ignorance systémique ;</p>
+            
+            <p>c) La <strong>pression économique</strong> sur les médias (baisse des recettes publicitaires, concurrence du numérique) pousse à des contenus de plus en plus racoleurs. Les accusés sont pris dans une spirale qu'ils n'ont pas créée.</p>
+            
+            <p><em>Ces circonstances atténuent la responsabilité individuelle mais n'effacent pas les dommages causés.</em></p>
+        </section>
+        
+        <!-- VERDICT -->
+        <div class="verdict-box">
+            <div class="verdict-title">RÉQUISITOIRE</div>
+            <p class="verdict-text">
+                Le Tribunal Citoyen Extraordinaire requiert que les accusés soient reconnus <strong>COUPABLES</strong> de crimes contre la cohésion nationale, de propagande de guerre sociale, de complicité de violence psychologique de masse, de sabotage du contrat social et de téléguidage présumé par intérêts étrangers au bien commun.
+                <br><br>
+                Les peines requises sont détaillées dans l'annexe "Sanctions Symboliques et Réparations Exigées".
+            </p>
+        </div>
+        
+        <!-- SANCTIONS DEMANDÉES -->
+        <section>
+            <h2>Sanctions Symboliques Requises</h2>
+            
+            <h3>Pour RTL Belgium SA</h3>
+            <p>• <strong>Diffusion d'un rectificatif</strong> de durée égale au documentaire (45 min), en prime time, présentant les données occultées (taux réel de fraude, ratio fiscal/social, témoignages complets) ;</p>
+            <p>• <strong>Financement d'une étude indépendante</strong> sur les impacts psychologiques de la couverture médiatique de la pauvreté en Belgique ;</p>
+            <p>• <strong>Requalification officielle</strong> du programme en "docu-fiction à visée politique" dans tous les catalogues et archives ;</p>
+            <p>• <strong>Création d'un fonds d'aide juridique</strong> pour les personnes stigmatisées par la couverture médiatique.</p>
+            
+            <h3>Pour Christophe DEBORSU</h3>
+            <p>• <strong>Excuses publiques</strong> aux personnes filmées, particulièrement Laetitia et Gaëlle Denys ;</p>
+            <p>• <strong>Déclaration publique</strong> du lien familial avec Charlotte Deborsu (MR) et engagement de transparence future ;</p>
+            <p>• <strong>Réalisation d'un contre-documentaire</strong> donnant la parole aux voix occultées : syndicats, associations, économistes critiques, victimes de la stigmatisation.</p>
+            
+            <h3>Pour les Institutions</h3>
+            <p>• <strong>Renforcement des pouvoirs du CSA</strong> avec amendes dissuasives (% du chiffre d'affaires, non montants fixes) ;</p>
+            <p>• <strong>Création d'un droit de réponse audiovisuel effectif</strong> pour les groupes sociaux stigmatisés ;</p>
+            <p>• <strong>Intégration de la "condition sociale"</strong> dans les motifs de discrimination protégés, avec mêmes sanctions que le racisme.</p>
+        </section>
+        
+        <!-- APPEL À LA POSTÉRITÉ -->
+        <section>
+            <h2>Appel à la Postérité</h2>
+            
+            <p>Ce tribunal n'a aucun pouvoir légal. Ses "condamnations" n'ont aucune force exécutoire. Et c'est précisément le problème.</p>
+            
+            <p>Quand un média peut, en 45 minutes et pour ~150.000€ de budget, infliger des dommages psychologiques mesurables à des milliers de personnes, détruire la réputation d'individus vulnérables, et préparer le terrain pour des politiques d'appauvrissement massif — et que la seule sanction possible est une amende de 3.000€ et un blâme du CDJ...</p>
+            
+            <p>...alors le système est complice.</p>
+            
+            <p>Ce document restera dans les archives. Dans 10 ans, dans 50 ans, quand des historiens étudieront comment les démocraties du XXIe siècle ont sombré dans l'inégalité et la division, ils trouveront ce dossier.</p>
+            
+            <p>Et ils sauront que certains citoyens avaient compris. Avaient documenté. Avaient crié.</p>
+            
+            <p>Ils sauront aussi qui n'a pas écouté.</p>
+            
+            <blockquote>
+                "Le monde ne sera pas détruit par ceux qui font le mal, mais par ceux qui les regardent sans rien faire."
+                <cite>— Albert Einstein</cite>
+            </blockquote>
+        </section>
+        
+        <!-- SIGNATURES -->
+        <section class="signatures">
+            <h2>Signatures</h2>
+            
+            <div class="signature-grid">
+                <div class="signature-item">
+                    <div class="signature-line">Le Peuple Belge</div>
+                    <div class="signature-name">Plaignant collectif</div>
+                    <div class="signature-title">410.860 téléspectateurs désinformés</div>
+                </div>
+                <div class="signature-item">
+                    <div class="signature-line">Les Oubliés</div>
+                    <div class="signature-name">Partie civile</div>
+                    <div class="signature-title">500.000+ demandeurs d'emploi belges</div>
+                </div>
+                <div class="signature-item">
+                    <div class="signature-line">Gaëlle Denys</div>
+                    <div class="signature-name">Témoin à décharge censuré</div>
+                    <div class="signature-title">1h d'interview → 30s de montage</div>
+                </div>
+                <div class="signature-item">
+                    <div class="signature-line">La Vérité</div>
+                    <div class="signature-name">Absente de l'antenne</div>
+                    <div class="signature-title">&lt;3% de fraude réelle (jamais cité)</div>
+                </div>
+            </div>
+            
+            <div class="stamps">
+                <div class="stamp">TRIBUNAL<br>CITOYEN<br>2026</div>
+                <div class="stamp approved">CONSCIENCE<br>PUBLIQUE<br>ACTIVÉE</div>
+                <div class="stamp">MÉMOIRE<br>COLLECTIVE<br>ARCHIVÉE</div>
+            </div>
+        </section>
+        
+        <!-- FOOTER -->
+        <footer class="doc-footer">
+            <p><strong>DOCUMENT FICTIF À VALEUR SATIRIQUE</strong></p>
+            <p>Produit par le Tribunal Citoyen Extraordinaire (instance imaginaire) — ouaisfi.eu</p>
+            <p>Les faits cités sont réels. L'interprétation juridique est fictive. La colère est authentique.</p>
+            <p>Bruxelles, le 29 janvier 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
