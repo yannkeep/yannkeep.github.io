@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APPEL À LA NATION — Belgique 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rouge: #c1121f;
+            --noir: #0d0d0d;
+            --jaune: #ffc300;
+            --blanc: #f5f5f5;
+            --gris: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--noir);
+            color: var(--blanc);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            background: 
+                linear-gradient(135deg, var(--noir) 0%, #1a0505 50%, var(--noir) 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(193,18,31,0.03) 2px,
+                    rgba(193,18,31,0.03) 4px
+                );
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--rouge);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--jaune);
+        }
+
+        .urgence {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            letter-spacing: 0.5em;
+            color: var(--rouge);
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 12vw, 10rem);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 .highlight {
+            color: var(--rouge);
+            display: block;
+        }
+
+        .sous-titre {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 400;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .date-appel {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--jaune);
+            letter-spacing: 0.2em;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--jaune);
+        }
+
+        /* SECTIONS RECURSIVES */
+        .niveau {
+            padding: 4rem 2rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .niveau:nth-child(odd) {
+            background: var(--noir);
+        }
+
+        .niveau:nth-child(even) {
+            background: var(--gris);
+        }
+
+        .niveau-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .niveau-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .niveau-numero {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: var(--rouge);
+            line-height: 1;
+            min-width: 80px;
+        }
+
+        .niveau-titre {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            letter-spacing: 0.05em;
+        }
+
+        .niveau-contenu {
+            padding-left: 0;
+        }
+
+        .niveau-contenu p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .chiffre-cle {
+            background: linear-gradient(90deg, var(--rouge), transparent);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--jaune);
+        }
+
+        .chiffre-cle .nombre {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--jaune);
+            display: block;
+            line-height: 1;
+        }
+
+        .chiffre-cle .description {
+            font-size: 1rem;
+            color: var(--blanc);
+            margin-top: 0.5rem;
+        }
+
+        /* FLECHE RECURSIVE */
+        .fleche-recursive {
+            text-align: center;
+            padding: 2rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--jaune);
+        }
+
+        .fleche-recursive svg {
+            width: 50px;
+            height: 50px;
+            fill: var(--jaune);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* APPEL CENTRAL */
+        .appel-central {
+            background: var(--rouge);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .appel-central h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 8vw, 5rem);
+            margin-bottom: 2rem;
+        }
+
+        .exigences {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: left;
+        }
+
+        .exigence {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.3);
+            border-left: 3px solid var(--jaune);
+        }
+
+        .exigence-numero {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--jaune);
+            min-width: 40px;
+        }
+
+        .exigence-texte {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* MECANISME RECURSIF */
+        .mecanisme {
+            background: var(--noir);
+            padding: 5rem 2rem;
+        }
+
+        .mecanisme h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--jaune);
+        }
+
+        .recursion-schema {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .recursion-etape {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--gris);
+            border-radius: 4px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .recursion-etape:hover {
+            transform: translateX(10px);
+            background: rgba(193,18,31,0.3);
+        }
+
+        .recursion-icone {
+            font-size: 2rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .recursion-texte h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+            color: var(--jaune);
+            margin-bottom: 0.3rem;
+        }
+
+        .recursion-texte p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .fleche-bas {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--rouge);
+        }
+
+        /* ENGAGEMENT */
+        .engagement {
+            background: linear-gradient(135deg, var(--gris) 0%, var(--noir) 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .engagement h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin-bottom: 2rem;
+        }
+
+        .serment {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            padding: 2rem;
+            background: rgba(193,18,31,0.2);
+            border: 2px solid var(--rouge);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .actions-citoyennes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .action-carte {
+            background: var(--gris);
+            padding: 2rem;
+            text-align: left;
+            border-top: 3px solid var(--rouge);
+            transition: transform 0.3s ease;
+        }
+
+        .action-carte:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-carte h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--jaune);
+            margin-bottom: 1rem;
+        }
+
+        .action-carte p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* SIGNATURE */
+        .signature {
+            background: var(--noir);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 4px solid var(--rouge);
+        }
+
+        .signature-texte {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .origine {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .hashtag {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--jaune);
+            margin-top: 1.5rem;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--gris);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        footer a {
+            color: var(--jaune);
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .niveau-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .niveau-numero {
+                font-size: 2.5rem;
+                min-width: auto;
+            }
+
+            .exigence {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .recursion-etape {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            .scroll-indicator { display: none; }
+            body { background: white; color: black; }
+            .niveau { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="urgence">⚠ SITUATION D'URGENCE SOCIALE ⚠</div>
+        <h1>
+            APPEL<br>
+            <span class="highlight">À LA NATION</span>
+        </h1>
+        <p class="sous-titre">
+            Le modèle social belge — construit depuis 1944 — est en cours de démantèlement. 
+            Ce n'est pas une réforme. C'est une destruction programmée.
+            <strong>Cela doit cesser.</strong>
+        </p>
+        <div class="date-appel">BELGIQUE — FÉVRIER 2026</div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </div>
+    </section>
+
+    <!-- NIVEAU 1 : LE CONSTAT -->
+    <section class="niveau">
+        <div class="niveau-container">
+            <div class="niveau-header">
+                <span class="niveau-numero">01</span>
+                <h2 class="niveau-titre">LE CONSTAT — CE QU'ILS ONT FAIT</h2>
+            </div>
+            <div class="niveau-contenu">
+                <p>
+                    Le gouvernement Arizona a voté la fin de l'<strong>exception belge</strong> : 
+                    les allocations de chômage, jusqu'ici illimitées dans le temps, seront désormais 
+                    limitées à 24 mois. Cette mesure unique au monde — qui empêchait le basculement 
+                    dans la grande pauvreté — est abolie.
+                </p>
+
+                <div class="chiffre-cle">
+                    <span class="nombre">90.000</span>
+                    <span class="description">personnes exclues du chômage d'ici 2027 — pas parce qu'elles ont trouvé un emploi, mais parce qu'un délai arbitraire aura expiré.</span>
+                </div>
+
+                <div class="chiffre-cle">
+                    <span class="nombre">30.122</span>
+                    <span class="description">familles qui basculeront vers l'aide sociale (RIS) dès 2026 — surchargeant des CPAS déjà au bord de l'implosion.</span>
+                </div>
+
+                <div class="chiffre-cle">
+                    <span class="nombre">80 M€</span>
+                    <span class="description">de surcoût pour les 19 CPAS bruxellois seuls — sans compensation fédérale adéquate.</span>
+                </div>
+
+                <p>
+                    Ce n'est pas de l'austérité. C'est un <strong>transfert massif des risques sociaux</strong> 
+                    de l'État vers les communes et vers les individus les plus fragiles. Un choix idéologique 
+                    déguisé en "nécessité budgétaire" alors que des alternatives existent.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="fleche-recursive">
+        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        <br>DONC
+    </div>
+
+    <!-- NIVEAU 2 : L'ALTERNATIVE EXISTE -->
+    <section class="niveau">
+        <div class="niveau-container">
+            <div class="niveau-header">
+                <span class="niveau-numero">02</span>
+                <h2 class="niveau-titre">L'ALTERNATIVE EXISTE — ILS L'ONT REFUSÉE</h2>
+            </div>
+            <div class="niveau-contenu">
+                <p>
+                    Ce n'est pas un problème technique. C'est un <strong>conflit de classe</strong>. 
+                    L'argent existe. Il a été décidé de ne pas aller le chercher là où il est.
+                </p>
+
+                <div class="chiffre-cle">
+                    <span class="nombre">17 Mds €</span>
+                    <span class="description">récupérables via une taxe sur les patrimoines supérieurs à 1 million d'euros — mesure bloquée par la coalition.</span>
+                </div>
+
+                <div class="chiffre-cle">
+                    <span class="nombre">30 Mds €</span>
+                    <span class="description">de fraude fiscale annuelle en Belgique selon les estimations — largement ignorée.</span>
+                </div>
+
+                <p>
+                    Plutôt que de taxer les 1% les plus riches, ils ont choisi de punir les plus fragiles : 
+                    chômeurs de longue durée, malades, familles monoparentales, étudiants. 
+                    Ceux qui n'ont pas de lobby. Ceux qui ne peuvent pas se défendre.
+                </p>
+                <p>
+                    <strong>Le discours dominant les a désignés comme "profiteurs" pour mieux justifier leur sacrifice.</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="fleche-recursive">
+        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        <br>DONC
+    </div>
+
+    <!-- NIVEAU 3 : LA PARTICRATIE -->
+    <section class="niveau">
+        <div class="niveau-container">
+            <div class="niveau-header">
+                <span class="niveau-numero">03</span>
+                <h2 class="niveau-titre">LE PROBLÈME EST SYSTÉMIQUE</h2>
+            </div>
+            <div class="niveau-contenu">
+                <p>
+                    La Constitution belge (Article 42) garantit que les parlementaires représentent 
+                    la Nation et sont libres de leurs votes. Cette liberté est devenue <strong>une fiction</strong>.
+                </p>
+                <p>
+                    En réalité, le pouvoir est passé du Parlement aux états-majors des partis. 
+                    L'accord de gouvernement — un document négocié en coulisses — prime sur la 
+                    volonté populaire. Le député qui vote contre la ligne du parti signe sa mort politique.
+                </p>
+                <p>
+                    C'est ce qu'on appelle la <strong>particratie</strong> : un système où les partis 
+                    ont confisqué la souveraineté nationale. Où le citoyen ne vote plus pour un 
+                    programme mais pour une marque. Où les élus obéissent aux dirigeants de parti, 
+                    pas à leurs électeurs.
+                </p>
+                <p>
+                    <strong>Ce système a produit le gouvernement Arizona. Ce système doit tomber.</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="fleche-recursive">
+        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        <br>DONC
+    </div>
+
+    <!-- APPEL CENTRAL -->
+    <section class="appel-central">
+        <h2>NOS EXIGENCES NON-NÉGOCIABLES</h2>
+        <div class="exigences">
+            <div class="exigence">
+                <span class="exigence-numero">I</span>
+                <span class="exigence-texte">
+                    <strong>CHUTE DU GOUVERNEMENT ARIZONA</strong> — Un gouvernement qui détruit 
+                    le contrat social de 1944 n'a plus de légitimité pour gouverner.
+                </span>
+            </div>
+            <div class="exigence">
+                <span class="exigence-numero">II</span>
+                <span class="exigence-texte">
+                    <strong>RÉTABLISSEMENT IMMÉDIAT DE L'EXCEPTION BELGE</strong> — Les allocations 
+                    de chômage illimitées dans le temps doivent être restaurées sans délai.
+                </span>
+            </div>
+            <div class="exigence">
+                <span class="exigence-numero">III</span>
+                <span class="exigence-texte">
+                    <strong>ENGAGEMENT DES PARTIS D'OPPOSITION</strong> — PS, Écolo, PTB, DéFI : 
+                    engagement public et irrévocable à rétablir le modèle social dans les 100 premiers jours 
+                    d'un nouveau gouvernement.
+                </span>
+            </div>
+            <div class="exigence">
+                <span class="exigence-numero">IV</span>
+                <span class="exigence-texte">
+                    <strong>JUSTICE FISCALE</strong> — Taxe sur les patrimoines supérieurs à 1M€, 
+                    lutte effective contre la fraude fiscale, fin des rulings abusifs.
+                </span>
+            </div>
+            <div class="exigence">
+                <span class="exigence-numero">V</span>
+                <span class="exigence-texte">
+                    <strong>MORATOIRE IMMÉDIAT</strong> — Suspension des exclusions chômage 
+                    pendant l'examen du recours constitutionnel.
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- MÉCANISME RÉCURSIF -->
+    <section class="mecanisme">
+        <h2>🔄 LE MÉCANISME — COMMENT NOUS GAGNONS</h2>
+        <div class="recursion-schema">
+            <div class="recursion-etape">
+                <span class="recursion-icone">👤</span>
+                <div class="recursion-texte">
+                    <h3>TOI — NIVEAU 0</h3>
+                    <p>Tu lis cet appel. Tu comprends l'urgence. Tu décides d'agir.</p>
+                </div>
+            </div>
+            <div class="fleche-bas">↓</div>
+            <div class="recursion-etape">
+                <span class="recursion-icone">👥</span>
+                <div class="recursion-texte">
+                    <h3>PROCHES — NIVEAU 1</h3>
+                    <p>Tu partages à 5 personnes minimum. Tu expliques. Tu convaincs.</p>
+                </div>
+            </div>
+            <div class="fleche-bas">↓</div>
+            <div class="recursion-etape">
+                <span class="recursion-icone">🏘️</span>
+                <div class="recursion-texte">
+                    <h3>QUARTIER — NIVEAU 2</h3>
+                    <p>Assemblée de voisins. Collectif local. Pression sur le CPAS et les élus communaux.</p>
+                </div>
+            </div>
+            <div class="fleche-bas">↓</div>
+            <div class="recursion-etape">
+                <span class="recursion-icone">🏛️</span>
+                <div class="recursion-texte">
+                    <h3>COMMUNE — NIVEAU 3</h3>
+                    <p>Motion au conseil communal. Interpellation du bourgmestre. Manifestation locale.</p>
+                </div>
+            </div>
+            <div class="fleche-bas">↓</div>
+            <div class="recursion-etape">
+                <span class="recursion-icone">📍</span>
+                <div class="recursion-texte">
+                    <h3>RÉGION — NIVEAU 4</h3>
+                    <p>Coordination des communes. Front régional. Pression sur les députés.</p>
+                </div>
+            </div>
+            <div class="fleche-bas">↓</div>
+            <div class="recursion-etape">
+                <span class="recursion-icone">🇧🇪</span>
+                <div class="recursion-texte">
+                    <h3>FÉDÉRAL — NIVEAU 5</h3>
+                    <p>50.000 personnes dans la rue. Grève générale. Le gouvernement tombe.</p>
+                </div>
+            </div>
+            <div class="fleche-bas" style="color: var(--jaune); font-size: 2rem;">
+                ↓<br>
+                <strong>VICTOIRE : LE MODÈLE SOCIAL EST RÉTABLI</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENGAGEMENT -->
+    <section class="engagement">
+        <h2>TON ENGAGEMENT — MAINTENANT</h2>
+        <div class="serment">
+            "Je m'engage à propager cet appel à au moins 5 personnes dans les 48 heures. 
+            Je m'engage à rejoindre ou créer un collectif local. Je m'engage à ne pas 
+            laisser détruire ce que nos aînés ont construit. Pour moi, pour mes enfants, 
+            pour la dignité de tous."
+        </div>
+        <div class="actions-citoyennes">
+            <div class="action-carte">
+                <h3>📱 PARTAGER</h3>
+                <p>Envoie cet appel à 5 personnes maintenant. WhatsApp, mail, signal, en main propre. Chaque personne compte.</p>
+            </div>
+            <div class="action-carte">
+                <h3>✍️ TÉMOIGNER</h3>
+                <p>Tu es concerné·e par les exclusions ? Ton témoignage est une arme. Contacte les syndicats, les associations, les médias.</p>
+            </div>
+            <div class="action-carte">
+                <h3>🏛️ INTERPELLER</h3>
+                <p>Écris à ton député. Va au conseil communal. Pose des questions aux candidats. Ne les laisse pas tranquilles.</p>
+            </div>
+            <div class="action-carte">
+                <h3>🤝 S'ORGANISER</h3>
+                <p>Rejoins le front commun syndical, le réseau anti-pauvreté, ou crée un collectif de quartier. Seuls on est faible, ensemble on gagne.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIGNATURE -->
+    <section class="signature">
+        <p class="signature-texte">
+            CET APPEL EST LE TIEN.<br>
+            PRENDS-LE. TRANSFORME-LE. PROPAGE-LE.
+        </p>
+        <p class="origine">
+            Document libre — CC BY-NC 4.0 — Aucun droit réservé sur l'urgence sociale
+        </p>
+        <p class="hashtag">#AppelBelgique2026 #StopArizona #ModèleSocialBelge</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            <strong>Sources :</strong> Bureau du Plan, Commission européenne, BNB, Comité d'étude sur le vieillissement, 
+            études DULBEA (ULB), IWEPS, Vivalis, projet Ouaisfieu.<br>
+            <strong>Recours constitutionnel :</strong> introduit le 29 octobre 2025 — Article 23 (principe de standstill).<br><br>
+            <em>"L'alternative existe : elle passe par la fiscalité sur le capital, la transformation de l'inactivité 
+            contrainte en contribution valorisée, et la reconstruction du contrat social autour de la dignité plutôt que de la punition."</em>
+        </p>
+    </footer>
+
+</body>
+</html>
